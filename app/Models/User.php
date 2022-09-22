@@ -18,11 +18,10 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'uid',
-        'first_name',
-        'last_name',
+        'name',
         'email',
         'password',
+        'status'
     ];
 
     /**
@@ -35,11 +34,6 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public static function findByUid(string $userUid)
-    {
-        return self::query()->where('uid', $userUid)->first();
-    }
-
     /**
      * The attributes that should be cast.
      *
@@ -48,4 +42,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // public function shifts()
+    // {
+    //     return $this->hasMany(Shift::class, 'employee_id');
+    // }
 }

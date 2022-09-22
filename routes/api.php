@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\EventController;
+use App\Http\Controllers\ShiftController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,19 +15,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/signin', [AuthController::class, 'signin']);
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
+Route::post('schedule-shift', [ShiftController::class, 'scheduleEmployeeShift']);
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/sign-out', [AuthController::class, 'logout']);
+Route::get('fetch-shift', [ShiftController::class, 'fetchEmployeeShift']);
 
-    Route::group(['prefix' => 'event'], function () {
-        Route::get('', [EventController::class, 'all']);
-        Route::get('my-events', [EventController::class, 'myEvent']);
-        Route::post('create', [EventController::class, 'create']);
-        Route::post('update', [EventController::class, 'update']);
-        Route::delete('delete', [EventController::class, 'delete']);
-        Route::post('create-ticket', [EventController::class, 'createTicket']);
-    });
+Route::get('fetch-employee', [ShiftController::class, 'fetchEmployee']);
+
+Route::post('fetch-individual-employee-shift-details', [ShiftController::class, 'fetchIndividualEmployeeShift']);
+
+Route::get('fetch-employee-shift-details', [ShiftController::class, 'fetchEmployeeShift']);
+
+Route::get('run-seeder', function () {
+
+    \Artisan::call('db:seed --class=ShiftDurationSeeder');
+
+    \Artisan::call('db:seed --class=UserSeeder');
 });

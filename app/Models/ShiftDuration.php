@@ -5,14 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ticket extends Model
+class ShiftDuration extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'event_id',
-        'amount',
-        'type',
-        'uid',
+    protected $fillable  = [
+        'start_time',
+        'end_time',
     ];
 }

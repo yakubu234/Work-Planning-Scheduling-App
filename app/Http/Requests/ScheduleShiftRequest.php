@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\Rule;
 
-class EventIdOnlyRequest extends FormRequest
+class ScheduleShiftRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,12 +20,14 @@ class EventIdOnlyRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, mixed>
+     * @return array
      */
     public function rules()
     {
         return [
-            'event_id' => ['required', 'string', 'exists:events,uid']
+            'employee_id' => ['required', 'integer'], #the employee id
+            'shift_days' => ['integer'], #number of days to be generated(default 1)
+            'start_date' => ['string'] #start date (default now())
         ];
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\JsonResponse;
 
@@ -15,7 +14,7 @@ use Illuminate\Http\JsonResponse;
 |
 */
 
-trait ResponseTrait
+trait ApiResponseTrait
 {
     /**
      * Return a success JSON response.
@@ -34,21 +33,6 @@ trait ResponseTrait
         ], $code);
     }
 
-    public function formValidationResponse($errors, array $data = []): JsonResponse
-    {
-        $response = [
-            'status' => 'failed',
-            'statuscode' => '422',
-            'message' => 'Whoops. Validation failed',
-            'validationErrors' => $errors,
-        ];
-
-        if (!empty($data)) {
-            $response['data'] = $data;
-        }
-
-        return Response::json($response, 406);
-    }
 
     /**
      * Return an error JSON response.

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateShiftDurationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tickets', function (Blueprint $table) {
+        Schema::create('shift_durations', function (Blueprint $table) {
             $table->id();
-            $table->string('uid');
-            $table->foreignId('event_id')->constrained('events')->onDelete('cascade');
-            $table->double('amount', 8, 2);
-            $table->enum('type', ['regular', 'gold', 'silver', 'platimum']);
+            $table->string('start_time');
+            $table->string('end_time');
             $table->timestamps();
+            $table->unique(['start_time', 'end_time']);
         });
     }
 
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tickets');
+        Schema::dropIfExists('shift_durations');
     }
-};
+}
